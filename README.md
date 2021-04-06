@@ -4,7 +4,7 @@
 
 <h1 align="center">Pulse Music</h1>
 
-<p align="center"> An offline music player with modern UI and useful features</p>
+<p align="center">An offline music player with modern UI and useful features</p>
 
 <p align="center">
   <a title="License" target="_blank" href="https://github.com/HardcodeCoder/pulsemusic/blob/master/LICENSE">

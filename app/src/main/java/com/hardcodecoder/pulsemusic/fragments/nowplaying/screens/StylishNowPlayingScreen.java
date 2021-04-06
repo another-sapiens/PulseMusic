@@ -46,7 +46,7 @@ public class StylishNowPlayingScreen extends BaseNowPlayingScreen {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragmen_now_playing_stylish, container, false);
+        return inflater.inflate(R.layout.fragment_now_playing_stylish, container, false);
     }
 
     @Override
