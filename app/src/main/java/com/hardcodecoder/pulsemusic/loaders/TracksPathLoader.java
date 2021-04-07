@@ -51,6 +51,10 @@ public class TracksPathLoader implements Callable<List<Folder>> {
             do {
                 String vol = cursor.getString(0);
                 String path = cursor.getString(1);
+
+                // Do not add null paths
+                if (null == vol || null == path || path.trim().equals("")) continue;
+
                 uniquePaths.add(new Folder(vol, path));
 
             } while (cursor.moveToNext());
