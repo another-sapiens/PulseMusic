@@ -9,11 +9,13 @@ import android.media.session.PlaybackState;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.hardcodecoder.pulsemusic.activities.main.SplashActivity;
 import com.hardcodecoder.pulsemusic.playback.PulseController;
 import com.hardcodecoder.pulsemusic.playback.PulseController.PulseRemote;
 import com.hardcodecoder.pulsemusic.service.PMS;
 import com.hardcodecoder.pulsemusic.utils.AppSettings;
 import com.hardcodecoder.pulsemusic.utils.LogUtils;
+import com.hardcodecoder.pulsemusic.utils.PulseUtil;
 
 public class PulseWidgetControlReceiver extends BroadcastReceiver {
 
@@ -37,10 +39,21 @@ public class PulseWidgetControlReceiver extends BroadcastReceiver {
             case ACTION_PLAY_PAUSE:
                 MediaController controller = pulseController.getController();
                 if (null == controller || null == controller.getPlaybackState()) {
-                    Intent serviceIntent = new Intent(context, PMS.class);
-                    serviceIntent.setAction(PMS.ACTION_PLAY_CONTINUE);
-                    serviceIntent.putExtra(PMS.KEY_PLAY_CONTINUE, AppSettings.getWidgetPlayAction(context));
-                    ContextCompat.startForegroundService(context, serviceIntent);
+                    if (!PulseUtil.isStoragePermissionGranted(context)) {
+                        // We don't have appropriate permissions
+                        // Let user grant required permissions
+                        Intent launchAppIntent = new Intent(context, SplashActivity.class);
+                        launchAppIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        launchAppIntent.setAction(PMS.ACTION_PLAY_CONTINUE);
+                        launchAppIntent.putExtra(PMS.KEY_PLAY_CONTINUE, AppSettings.getWidgetPlayAction(context));
+                        context.startActivity(launchAppIntent);
+                    } else {
+                        // We have permissions. Start service
+                        Intent serviceIntent = new Intent(context, PMS.class);
+                        serviceIntent.setAction(PMS.ACTION_PLAY_CONTINUE);
+                        serviceIntent.putExtra(PMS.KEY_PLAY_CONTINUE, AppSettings.getWidgetPlayAction(context));
+                        ContextCompat.startForegroundService(context, serviceIntent);
+                    }
                     return;
                 }
                 PlaybackState state = controller.getPlaybackState();

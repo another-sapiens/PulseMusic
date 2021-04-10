@@ -38,7 +38,7 @@ public class SplashActivity extends ThemeActivity {
     private void getPermission() {
         if (PulseUtil.isStoragePermissionGranted(this)) {
             doStartUpInitialization();
-            startHomeActivity();
+            startPulse();
         } else {
             PulseUtil.getStoragePermission(this);
         }
@@ -50,7 +50,7 @@ public class SplashActivity extends ThemeActivity {
         if (requestCode == PulseUtil.STORAGE_PERMISSION_REQUEST_CODE) {
             if (grantResults.length >= 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 doStartUpInitialization();
-                startHomeActivity();
+                startPulse();
             } else {
                 // Permission was not granted
                 Toast.makeText(this, getString(R.string.toast_requires_storage_access), Toast.LENGTH_LONG).show();
@@ -76,16 +76,23 @@ public class SplashActivity extends ThemeActivity {
         });
     }
 
-    private void startHomeActivity() {
+    private void startPulse() {
         mHandler.postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, MainContentActivity.class);
-            Uri uri = getIntent().getData();
+            Intent intent = getIntent();
+
+            Intent mainActivityIntent = new Intent(SplashActivity.this, MainContentActivity.class);
+            Intent serviceIntent = new Intent(this, PMS.class);
+            Uri uri = intent.getData();
             if (uri != null) {
-                intent.setAction(MainContentActivity.ACTION_PLAY_FROM_URI);
-                intent.putExtra(MainContentActivity.TRACK_URI, uri.toString());
+                mainActivityIntent.setAction(MainContentActivity.ACTION_PLAY_FROM_URI);
+                mainActivityIntent.putExtra(MainContentActivity.TRACK_URI, uri.toString());
+            } else if (intent.getAction().equals(PMS.ACTION_PLAY_CONTINUE)) {
+                serviceIntent.setAction(PMS.ACTION_PLAY_CONTINUE);
+                serviceIntent.putExtra(PMS.KEY_PLAY_CONTINUE, intent.getIntExtra(PMS.KEY_PLAY_CONTINUE, PMS.DEFAULT_ACTION_PLAY_NONE));
+
             }
-            startService(new Intent(this, PMS.class));
-            startActivity(intent);
+            startActivity(mainActivityIntent);
+            startService(serviceIntent);
             finish();
         }, 400);
     }
