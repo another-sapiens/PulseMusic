@@ -1,6 +1,5 @@
 package com.hardcodecoder.pulsemusic.activities.main;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.hardcodecoder.pulsemusic.Preferences;
 import com.hardcodecoder.pulsemusic.R;
@@ -23,10 +20,10 @@ import com.hardcodecoder.pulsemusic.service.PMS;
 import com.hardcodecoder.pulsemusic.shortcuts.AppShortcutsManager;
 import com.hardcodecoder.pulsemusic.themes.TintHelper;
 import com.hardcodecoder.pulsemusic.utils.AppSettings;
+import com.hardcodecoder.pulsemusic.utils.PulseUtil;
 
 public class SplashActivity extends ThemeActivity {
 
-    private static final int REQUEST_CODE = 69;
     private final Handler mHandler = TaskRunner.getMainHandler();
 
     @Override
@@ -39,19 +36,18 @@ public class SplashActivity extends ThemeActivity {
     }
 
     private void getPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (PulseUtil.isStoragePermissionGranted(this)) {
             doStartUpInitialization();
             startHomeActivity();
         } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
+            PulseUtil.getStoragePermission(this);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == PulseUtil.STORAGE_PERMISSION_REQUEST_CODE) {
             if (grantResults.length >= 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 doStartUpInitialization();
                 startHomeActivity();
