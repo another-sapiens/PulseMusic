@@ -73,6 +73,7 @@ public abstract class DraggableNowPlayingSheetActivity extends ControllerActivit
             mBottomNavBar.postOnAnimation(() -> onNavigationItemSelected(menuItem));
             return true;
         });
+        setActiveTab(AppSettings.getDefaultTabId(this));
     }
 
     private boolean initializeBottomSheet() {
@@ -291,6 +292,27 @@ public abstract class DraggableNowPlayingSheetActivity extends ControllerActivit
         if (null != mBehaviour) mBehaviour.setState(BottomSheetBehavior.STATE_EXPANDED);
         mPeekingFrame.setVisibility(View.GONE);
         mExpandedFrame.setVisibility(View.VISIBLE);
+    }
+
+    public void setActiveTab(int tabId) {
+        final int menuId;
+        switch (tabId) {
+            case Preferences.TAB_LIBRARY:
+                menuId = R.id.nav_library;
+                break;
+            case Preferences.TAB_ALBUMS:
+                menuId = R.id.nav_album;
+                break;
+            case Preferences.TAB_ARTISTS:
+                menuId = R.id.nav_artist;
+                break;
+            case Preferences.TAB_PLAYLIST:
+                menuId = R.id.nav_playlist;
+                break;
+            default:
+                menuId = R.id.nav_home;
+        }
+        mBottomNavBar.setSelectedItemId(menuId);
     }
 
     @Override

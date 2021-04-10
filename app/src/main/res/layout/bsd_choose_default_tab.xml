@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <com.hardcodecoder.pulsemusic.views.AccentColorTextView
+        android:id="@+id/default_tab_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="start"
+        android:text="@string/default_tab_title"
+        android:textAppearance="@style/Appearance.Text.Subtitle1" />
+
+    <RadioGroup
+        android:id="@+id/radio_button_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/default_tab_title"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical">
+
+        <com.hardcodecoder.pulsemusic.views.AccentColorRadioButton
+            android:id="@+id/tab_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="32dp"
+            android:paddingEnd="0dp"
+            android:text="@string/nav_home"
+            android:textAppearance="@style/Appearance.Text.Subtitle2"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <com.hardcodecoder.pulsemusic.views.AccentColorRadioButton
+            android:id="@+id/tab_library"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="32dp"
+            android:paddingEnd="0dp"
+            android:text="@string/nav_library"
+            android:textAppearance="@style/Appearance.Text.Subtitle2"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <com.hardcodecoder.pulsemusic.views.AccentColorRadioButton
+            android:id="@+id/tab_albums"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="32dp"
+            android:paddingEnd="0dp"
+            android:text="@string/nav_albums"
+            android:textAppearance="@style/Appearance.Text.Subtitle2"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <com.hardcodecoder.pulsemusic.views.AccentColorRadioButton
+            android:id="@+id/tab_artists"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="32dp"
+            android:paddingEnd="0dp"
+            android:text="@string/nav_artists"
+            android:textAppearance="@style/Appearance.Text.Subtitle2"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <com.hardcodecoder.pulsemusic.views.AccentColorRadioButton
+            android:id="@+id/tab_playlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="32dp"
+            android:paddingEnd="0dp"
+            android:text="@string/nav_playlist"
+            android:textAppearance="@style/Appearance.Text.Subtitle2"
+            android:textColor="?android:attr/textColorPrimary" />
+    </RadioGroup>
+
+    <com.hardcodecoder.pulsemusic.views.AccentColorMaterialButton
+        android:id="@+id/default_tab_cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radio_button_group"
+        android:layout_toStartOf="@id/default_tab_set_btn"
+        android:text="@string/cancel"
+        app:accentButtonStyle="text" />
+
+    <com.hardcodecoder.pulsemusic.views.AccentColorMaterialButton
+        android:id="@+id/default_tab_set_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radio_button_group"
+        android:layout_alignParentEnd="true"
+        android:text="@string/set"
+        app:accentButtonStyle="text" />
+</RelativeLayout>

@@ -68,4 +68,14 @@
         app:settingItemIconColor="?attr/colorControlNormal"
         app:settingItemText="@string/edit_playlist_section_desc"
         app:settingItemTitle="@string/edit_playlist_sections_title" />
+
+    <com.hardcodecoder.pulsemusic.views.SettingsCategoryItem
+        android:id="@+id/default_tab_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        app:settingItemIcon="@drawable/ic_tab"
+        app:settingItemIconColor="?attr/colorControlNormal"
+        app:settingItemText="@string/default_tab_desc"
+        app:settingItemTitle="@string/default_tab_title" />
 </LinearLayout>

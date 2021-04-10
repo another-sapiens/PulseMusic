@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.hardcodecoder.pulsemusic.MediaArtCache;
+import com.hardcodecoder.pulsemusic.Preferences;
 import com.hardcodecoder.pulsemusic.R;
 import com.hardcodecoder.pulsemusic.activities.base.DraggableNowPlayingSheetActivity;
 import com.hardcodecoder.pulsemusic.dialog.MainActivityMenu;
@@ -179,9 +180,29 @@ public class MainContentActivity extends DraggableNowPlayingSheetActivity implem
         });
     }
 
-    private void setUpMainContents(Bundle savedInstanceState) {
-        if (savedInstanceState == null) switchFragment(homeFrag, HomeFragment.TAG);
-        else switchFragment(activeFrag, savedInstanceState.getString(ACTIVE, HomeFragment.TAG));
+    private void setUpMainContents(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            String tag;
+            final int tabId = AppSettings.getDefaultTabId(this);
+            setActiveTab(tabId);
+            switch (tabId) {
+                case Preferences.TAB_LIBRARY:
+                    tag = LibraryFragment.TAG;
+                    break;
+                case Preferences.TAB_ALBUMS:
+                    tag = AlbumsFragment.TAG;
+                    break;
+                case Preferences.TAB_ARTISTS:
+                    tag = ArtistFragment.TAG;
+                    break;
+                case Preferences.TAB_PLAYLIST:
+                    tag = PlaylistFragment.TAG;
+                    break;
+                default:
+                    tag = HomeFragment.TAG;
+            }
+            switchFragment(null, tag);
+        } else switchFragment(activeFrag, savedInstanceState.getString(ACTIVE, HomeFragment.TAG));
     }
 
     private void switchFragment(@Nullable PulseFragment switchTo, @NonNull String tag) {

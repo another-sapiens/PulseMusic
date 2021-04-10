@@ -105,6 +105,17 @@ public class AppSettings {
                 .getBoolean(playlistSection, false);
     }
 
+    public static void setDefaultTab(@NonNull Context context, int tabId) {
+        SharedPreferences.Editor editor = context.getSharedPreferences(Preferences.PREF_GENERAL, Context.MODE_PRIVATE).edit();
+        editor.putInt(Preferences.KEY_DEFAULT_TAB, tabId);
+        editor.apply();
+    }
+
+    public static int getDefaultTabId(@NonNull Context context) {
+        return context.getSharedPreferences(Preferences.PREF_GENERAL, Context.MODE_PRIVATE)
+                .getInt(Preferences.KEY_DEFAULT_TAB, Preferences.TAB_HOME);
+    }
+
     public static void saveSelectedDarkTheme(@NonNull Context context, int id) {
         SharedPreferences.Editor editor = context.getSharedPreferences(Preferences.PREFS_PULSE_THEMES, Context.MODE_PRIVATE).edit();
         editor.putInt(Preferences.DARK_THEME_CATEGORY_KEY, id);

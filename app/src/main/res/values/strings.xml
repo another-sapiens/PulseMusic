@@ -249,6 +249,8 @@
     <string name="edit_playlist_section_desc">Select which playlist\'s to show in the home screen</string>
     <string name="playlist_section_selector_title">Toggle playlist section</string>
     <string name="rediscover_section_desc">Note: This section is dynamic and may not be shown always, even if enabled</string>
+    <string name="default_tab_title">Select default tab</string>
+    <string name="default_tab_desc">Choose the tab to show when pulse music is started</string>
 
     <!-- Theme section -->
     <string name="category_theme">Theme</string>

@@ -96,6 +96,14 @@ public final class Preferences {
     public static final String KEY_PREVIOUS_PLAYLIST_TRACK_POSITION = "PlaylistTrackPosition";
     // Shared preference for playlist sections in home page
     public static final String PREF_HOME_PLAYLIST_SECTIONS = "HomePlaylistSections";
+    // Key for storing default tab
+    public static final String KEY_DEFAULT_TAB = "DefaultTab";
+    // Constants identifiers for different tabs
+    public static final short TAB_HOME = 100; // Home is the default tab by default
+    public static final short TAB_LIBRARY = 101;
+    public static final short TAB_ALBUMS = 102;
+    public static final short TAB_ARTISTS = 103;
+    public static final short TAB_PLAYLIST = 104;
     // Keys that determines whether the following section is enabled
     public static final String KEY_HOME_PLAYLIST_TOP_ALBUMS = "HomePlaylistTopAlbums";
     public static final String KEY_HOME_PLAYLIST_FOR_YOU = "HomePlaylistForYou";
