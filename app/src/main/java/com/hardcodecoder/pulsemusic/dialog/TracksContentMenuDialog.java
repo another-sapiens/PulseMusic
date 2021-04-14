@@ -60,7 +60,6 @@ public class TracksContentMenuDialog extends RoundedCustomBottomSheetFragment {
     }
 
     @Override
-    @SuppressWarnings("ConstantConditions")
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // Additional null check even though we will not accept null values for mTrackModel
         // Just in case at runtime mTrack happens to be null Don't show this dialog
@@ -193,29 +192,29 @@ public class TracksContentMenuDialog extends RoundedCustomBottomSheetFragment {
 
     public void deleteTrack() {
         TaskRunner.executeAsync(() -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) performDeleteTrackQ();
-            else performDeleteTrackPreQ();
+            Uri uri = Uri.parse(mTrackModel.getTrackPath());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) performDeleteTrackQ(uri);
+            else performDeleteTrackPreQ(uri);
         });
     }
 
-    private void performDeleteTrackPreQ() {
+    private void performDeleteTrackPreQ(@NonNull Uri uri) {
         try {
-            Cursor cursor = requireActivity().getContentResolver().query(
-                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                    new String[]{MediaStore.Audio.Media.DATA},
-                    MediaStore.Audio.Media._ID + " = ?",
-                    new String[]{String.valueOf(mTrackModel.getId())},
-                    null);
+            Cursor cursor = requireActivity().getContentResolver()
+                    .query(uri,
+                            new String[]{MediaStore.Audio.Media.DATA},
+                            null,
+                            null,
+                            null);
 
             if (null == cursor || !cursor.moveToFirst()) return;
 
             String fullPath = cursor.getString(0);
             File file = new File(fullPath);
             if (file.delete()) {
-                int deleted = deleteFromMediaStore();
+                int deleted = deleteFromMediaStore(uri);
                 if (deleted < 1) {
                     // unable to delete from media store
-                    // log info
                     LogUtils.logInfo(TAG, "Unable to delete track from MediaStore: " + mTrackModel.getTrackPath());
                 }
                 // Since the track has been deleted from the file system
@@ -229,9 +228,9 @@ public class TracksContentMenuDialog extends RoundedCustomBottomSheetFragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    private void performDeleteTrackQ() {
+    private void performDeleteTrackQ(@NonNull Uri uri) {
         try {
-            int deleted = deleteFromMediaStore();
+            int deleted = deleteFromMediaStore(uri);
             onPostDeleteAction(deleted > 0);
         } catch (SecurityException securityException) {
             if (!(securityException instanceof RecoverableSecurityException)) return;
@@ -250,12 +249,12 @@ public class TracksContentMenuDialog extends RoundedCustomBottomSheetFragment {
         }
     }
 
-    private int deleteFromMediaStore() {
+    private int deleteFromMediaStore(@NonNull Uri uri) {
         return requireActivity()
                 .getContentResolver()
-                .delete(Uri.parse(mTrackModel.getTrackPath()),
-                        MediaStore.Audio.Media._ID + " = ?",
-                        new String[]{String.valueOf(mTrackModel.getId())});
+                .delete(uri,
+                        null,
+                        null);
     }
 
     private void onPostDeleteAction(boolean deleted) {
@@ -277,7 +276,8 @@ public class TracksContentMenuDialog extends RoundedCustomBottomSheetFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == DELETE_REQ_CODE && resultCode == RESULT_OK) {
             // We have been granted the permission to delete the item
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) performDeleteTrackQ();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                performDeleteTrackQ(Uri.parse(mTrackModel.getTrackPath()));
         }
     }
 
