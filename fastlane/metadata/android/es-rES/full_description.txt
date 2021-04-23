@@ -1,1 +1,12 @@
-Una aplicación de reproducción de músic para complementar su colección de música offline con soporte para playlist, opciones de tema, pantalla múltiple sobre qué está reproduciendo, atajos rápidos, y muchos más.
+Una app de reproducción musical para complementar tu colección de música offline con soporte de playlists, opciones de temas, múltiples pantallas de "Estás escuchando", atajos de reproducción, paneles de ajustes rápidos, temporizador de apagado y un montón de personalizaciones útiles. 
+
+
+Permisos requeridos por la app:
+Permisos requeridos:
+1. READ_EXTERNAL_STORAGE: Para obtener las canciones guardadas en el dispositivo.
+2. FOREGROUND_SERVICE: Para continuar la reproducción de medios aún cuando la app está de fondo.
+3. WRITE_EXTERNAL_STORAGE: Necesario para mostrar el arte de los álbum en algunos dispositivos (Principalmente en Android 9 o inferior).
+
+Permisos opcionales:
+3. BLUETOOTH: Para detectar el estado conectado/desconectado de dispositivos Bluetooth (usado sólo cuando la reproducción automática con Bluetooth está activada en los ajustes).
+4. RECEIVE_BOOT_COMPLETED: Este permiso habilita que la app inicie servicios necesarios que activan la función auto play de Bluetooth después de reiniciar el dispositivo (utilizado solamente si la reproducción automática con Bluetooth está encendida). 
