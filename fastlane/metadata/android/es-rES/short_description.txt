@@ -1,1 +1,3 @@
-Un reproductor de música offlin, con moderna UI y poderosas características
+An offline music player app, with modern UI and powerful features
+
+Un reproductor de música offline, con interfaz moderna y funciones avanzadas.
